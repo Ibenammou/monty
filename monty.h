@@ -65,7 +65,42 @@ char *delete_spaces(char *string);
 void push_function(stack_t **stack_head, unsigned int line_number);
 void pall_function(stack_t **stack_head, unsigned int line_number);
 void pint_function(stack_t **stack_head, unsigned int line_number);
-void pop_function(stack_t **stack_head, unsigned int line_number);
+void pop_function(stack_t **stack, unsigned int line_number)
+{
+    stack_t *temp;
+
+    if (stack == NULL || *stack == NULL)
+    {
+        fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    temp = *stack;
+    *stack = temp->next;
+
+    if (*stack != NULL)
+        (*stack)->prev = NULL;
+
+    free(temp);
+}
+
+/* Add other opcode functions as needed */
+
+/**
+ * execute_opcode - Executes the opcode provided in the Monty byte code file.
+ * @opcode: Opcode to be executed.
+ * @stack: Double pointer to the beginning of the stack.
+ * @line_number: Line number in Monty byte code file where the opcode appears.
+ */
+void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
+{
+    /* Add other opcodes here, for example: */
+    if (strcmp(opcode, "pop") == 0)
+        pop_function(stack, line_number);
+    /* Add more opcodes as needed */
+}
+
+/* Add other helper functions and main logic as needed */
 void swap_function(stack_t **stack_head, unsigned int line_number);
 void add_function(stack_t **stack_head, unsigned int line_number);
 void nop_function(stack_t **stack_head, unsigned int line_number);
